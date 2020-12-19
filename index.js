@@ -230,7 +230,7 @@ var torrentStream = function (link, opts, cb) {
       engine.emit('verify', index)
       engine.emit('download', index, buffer)
 
-      engine.store.put(index, buffer)
+      //engine.store.put(index, buffer)
       gc()
     }
 

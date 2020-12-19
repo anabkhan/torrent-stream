@@ -667,6 +667,20 @@ var torrentStream = function (link, opts, cb) {
     refresh()
   }
 
+  engine.deselectWithoutNotifyCheck = function (from, to, priority, notify) {
+    notify = notify || noop
+    for (var i = 0; i < engine.selection.length; i++) {
+      var s = engine.selection[i]
+      if (s.from !== from || s.to !== to) continue
+      if (s.priority !== toNumber(priority)) continue
+      // if (s.notify !== notify) continue
+      engine.selection.splice(i, 1)
+      i--
+      break
+    }
+    refresh()
+  }
+
   engine.setPulse = function (bps) {
     // Set minimum byte/second pulse starting now (dynamic)
     // Eg. Start pulsing at minimum 312 KBps:

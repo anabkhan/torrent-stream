@@ -672,7 +672,7 @@ var torrentStream = function (link, opts, cb) {
     wires.forEach(function (wire) {
       wire.uninterested()
     })
-    refresh()
+    // refresh()
   }
 
   engine.setPulse = function (bps) {

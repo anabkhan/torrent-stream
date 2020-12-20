@@ -279,7 +279,7 @@ var torrentStream = function (link, opts, cb) {
       if (!pieces[index]) return false
 
       var p = pieces[index]
-      var reservation = p.reserve()
+      var f = p.reserve()
 
       if (reservation === -1 && hotswap && onhotswap(wire, index)) reservation = p.reserve()
       if (reservation === -1) return false
@@ -669,7 +669,9 @@ var torrentStream = function (link, opts, cb) {
 
   engine.deselectAll = function () {
     console.log('deselecting all selecions of engine')
-    engine.selection = []
+    wires.forEach(function (wire) {
+      wire.uninterested()
+    })
     refresh()
   }
 

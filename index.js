@@ -669,9 +669,9 @@ var torrentStream = function (link, opts, cb) {
 
   engine.deselectAll = function () {
     console.log('deselecting all selecions of engine')
-    wires.forEach(function (wire) {
-      wire.uninterested()
-    })
+    // wires.forEach(function (wire) {
+    //   wire.uninterested()
+    // })
     // refresh()
   }
 

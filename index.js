@@ -452,11 +452,11 @@ var torrentStream = function (link, opts, cb) {
 
       wire.on('request', function (index, offset, length, cb) {
         if (pieces[index]) return
-        // engine.store.get(index, { offset: offset, length: length }, function (err, buffer) {
-        //   if (err) return cb(err)
-        //   engine.emit('upload', index, offset, length)
-        //   cb(null, buffer)
-        // })
+        engine.store.get(index, { offset: offset, length: length }, function (err, buffer) {
+          if (err) return cb(err)
+          engine.emit('upload', index, offset, length)
+          cb(null, buffer)
+        })
       })
 
       wire.on('unchoke', onupdate)

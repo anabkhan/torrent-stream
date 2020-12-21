@@ -568,18 +568,18 @@ var torrentStream = function (link, opts, cb) {
 
     engine.emit('verifying')
 
-    // var loop = function (i) {
-    //   if (i >= torrent.pieces.length) return onready()
-    //   engine.store.get(i, function (_, buf) {
-    //     if (!buf || sha1(buf) !== torrent.pieces[i] || !pieces[i]) return loop(i + 1)
-    //     pieces[i] = null
-    //     engine.bitfield.set(i, true)
-    //     engine.emit('verify', i)
-    //     loop(i + 1)
-    //   })
-    // }
+    var loop = function (i) {
+      if (i >= torrent.pieces.length) return onready()
+      engine.store.get(i, function (_, buf) {
+        if (!buf || sha1(buf) !== torrent.pieces[i] || !pieces[i]) return loop(i + 1)
+        pieces[i] = null
+        engine.bitfield.set(i, true)
+        engine.emit('verify', i)
+        loop(i + 1)
+      })
+    }
 
-    // loop(0)
+    loop(0)
   }
 
   var exchange = exchangeMetadata(engine, function (metadata) {

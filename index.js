@@ -128,15 +128,15 @@ var torrentStream = function (link, opts, cb) {
 
   var ontorrent = function (torrent) {
     var storage = opts.storage || FSChunkStore
-    engine.store = ImmediateChunkStore(storage(torrent.pieceLength, {
-      files: torrent.files.map(function (file) {
-        return {
-          path: path.join(opts.path, file.path),
-          length: file.length,
-          offset: file.offset
-        }
-      })
-    }))
+    // engine.store = ImmediateChunkStore(storage(torrent.pieceLength, {
+    //   files: torrent.files.map(function (file) {
+    //     return {
+    //       path: path.join(opts.path, file.path),
+    //       length: file.length,
+    //       offset: file.offset
+    //     }
+    //   })
+    // }))
     engine.torrent = torrent
     engine.bitfield = bitfield(torrent.pieces.length)
 

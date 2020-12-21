@@ -571,7 +571,11 @@ var torrentStream = function (link, opts, cb) {
     var loop = function (i) {
       if (i >= torrent.pieces.length) return onready()
       engine.store.get(i, function (_, buf) {
-        if (!buf || sha1(buf) !== torrent.pieces[i] || !pieces[i]) return loop(i + 1)
+        console.log('buffer from engine ', buf);
+        if (!buf || sha1(buf) !== torrent.pieces[i] || !pieces[i]) {
+          console.log('inside loop if condition')
+         return loop(i + 1) 
+        }
         pieces[i] = null
         engine.bitfield.set(i, true)
         engine.emit('verify', i)

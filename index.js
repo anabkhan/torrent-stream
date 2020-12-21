@@ -570,18 +570,19 @@ var torrentStream = function (link, opts, cb) {
 
     var loop = function (i) {
       if (i >= torrent.pieces.length) return onready()
-      engine.store.get(i, function (_, buf) {
-        console.log('buffer from engine ', buf);
-        if (!buf || sha1(buf) !== torrent.pieces[i] || !pieces[i]) {
-          console.log('inside loop if condition ', i)
-         return loop(i + 1) 
-        }
-        console.log('outside loop condition ', i)
-        pieces[i] = null
-        engine.bitfield.set(i, true)
-        engine.emit('verify', i)
-        loop(i + 1)
-      })
+      return loop(i + 1) 
+      // engine.store.get(i, function (_, buf) {
+      //   console.log('buffer from engine ', buf);
+      //   if (!buf || sha1(buf) !== torrent.pieces[i] || !pieces[i]) {
+      //     console.log('inside loop if condition ', i)
+      //    return loop(i + 1) 
+      //   }
+      //   console.log('outside loop condition ', i)
+      //   pieces[i] = null
+      //   engine.bitfield.set(i, true)
+      //   engine.emit('verify', i)
+      //   loop(i + 1)
+      // })
     }
 
     loop(0)
